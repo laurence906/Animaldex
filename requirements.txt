@@ -1,3 +1,4 @@
+# REQUIRE PYTHON 3.12
 absl-py==2.4.0
 annotated-doc==0.0.4
 anyio==4.12.1
