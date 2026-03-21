@@ -71,3 +71,64 @@ form{
     gap: 5px;
     align-items: center;
 }
+form > div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+form label {
+    flex-shrink: 0;
+    height: 30px;
+    width: 50px;
+    background-color: var(--accent-color);
+    fill: var(--base-color);
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px 0 0 5px;
+}
+
+form input {
+    box-sizing: border-box;
+    background-color: var(--input-color);
+    flex-grow: 1;
+    min-width: 0;
+    height: 30px;
+    padding: 1em;
+    border-radius: 0 5px 5px 0;
+    border: 2px solid var(--input-color);
+    border-left: none;
+    transition: 200ms ease-in-out;
+}
+form input:hover {
+    border-color: var(--accent-color);
+}
+form input:focus {
+    outline: none;
+    border-color: var(--text-color);
+}
+
+form button {
+    margin-top: 20px;
+    border: solid 2px rgb(36, 34, 34);
+    border-radius: 5px;
+    padding: 1em 1.5em;
+    background-color: var(--accent-color);
+    color: var(--base-color);
+    font: Atkinson Hyperlegible Mono, monospace;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+}
+form button:hover {
+    background-color: var(--text-color);
+}
+form button:focus {
+    outline: none;
+    background-color: var(--accent-color);
+}
+
+a:hover {
+    text-decoration: underline;
+}

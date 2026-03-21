@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Chango&display=swap');
-:root{
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap');
+:root {
     --base-color: rgb(201, 221, 205);
     --accent-color: rgb(61, 88, 63);
     --text-color: rgb(36, 34, 34);
-    --input-color: rgb(225, 229, 233);
+    --input-color: rgb(239, 240, 241);
 
 }
 
@@ -12,21 +13,21 @@
     padding: 0;
 }
 
-html{
-    font-family: "Chango", "Averia Libre", sans-serif;
+html {
+    font-family: "Chango", "Atkinson Hyperlegible Mono", "Averia Libre", sans-serif;
     font-size: 12pt;
     color: var(--text-color);
     text-align: center;
 }
 
-body{
+body {
     min-height: 100vh;
     background-size: cover;
     background-position: right;
     overflow: hidden;
 }
 
-.signup-container{
+.signup-container {
     display: flex;
     height: 100vh;
     background: var(--base-color);
@@ -35,7 +36,7 @@ body{
     z-index: 0;
 }
 
-.form-panel{
+.form-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -47,7 +48,7 @@ body{
     z-index: 0;
 }
 
-.image-panel{  
+.image-panel {  
     flex: 1;
     position: relative;
     background-image: url("../elements/heron.jpg");
@@ -58,11 +59,11 @@ body{
     z-index: 0;
 }
 
-h1{
+h1 {
     font-size: 4rem;
 }
 
-form{
+form {
     display: flex;
     flex-direction: column;
     width: min(400px, 100%);
@@ -70,4 +71,66 @@ form{
     margin-bottom: 50px;
     gap: 5px;
     align-items: center;
+}
+
+form > div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+form label {
+    flex-shrink: 0;
+    height: 30px;
+    width: 50px;
+    background-color: var(--accent-color);
+    fill: var(--base-color);
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px 0 0 5px;
+}
+
+form input {
+    box-sizing: border-box;
+    background-color: var(--input-color);
+    flex-grow: 1;
+    min-width: 0;
+    height: 30px;
+    padding: 1em;
+    border-radius: 0 5px 5px 0;
+    border: 2px solid var(--input-color);
+    border-left: none;
+    transition: 200ms ease-in-out;
+}
+form input:hover {
+    border-color: var(--accent-color);
+}
+form input:focus {
+    outline: none;
+    border-color: var(--text-color);
+}
+
+form button {
+    margin-top: 20px;
+    border: solid 2px rgb(36, 34, 34);
+    border-radius: 5px;
+    padding: 1em 1.5em;
+    background-color: var(--accent-color);
+    color: var(--base-color);
+    font: Atkinson Hyperlegible Mono, monospace;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+}
+form button:hover {
+    background-color: var(--text-color);
+}
+form button:focus {
+    outline: none;
+    background-color: var(--accent-color);
+}
+
+a:hover {
+    text-decoration: underline;
 }
