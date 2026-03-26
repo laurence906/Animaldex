@@ -18,9 +18,11 @@ else:
     for filename in files:
         # reconstruct the full path
         full_path = os.path.join(image_path, filename)
-        if full_path == "test_images/.DS_Store":
+
+        if full_path == "test_images/.DS_Store": # handle macOS hidden file
              continue
-        result_dict = model.predict(
+        
+        result_dict = model.predict( # per image, alternatively you can pass in [path1, path2, etc]
             filepaths = [full_path],
             run_mode = 'single_thread'
         )
