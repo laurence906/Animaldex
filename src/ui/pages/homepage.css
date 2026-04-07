@@ -18,3 +18,48 @@ html{
     color: var(--text-color);
     text-align: center;
 }
+
+.container {
+    position: relative;
+    height: 100vh;
+    background: rgb(201, 221, 205);
+}
+
+.title {
+    margin-top: 60px;
+    font-size: 3rem;
+}
+
+.upload_container {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav_buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.nav_buttons a {
+    padding: 8px 12px;
+    background: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: rgb(61, 88, 63);
+    color: white;
+}
+
+button:hover,
+.nav_buttons a:hover {
+    opacity: 0.8;
+}
