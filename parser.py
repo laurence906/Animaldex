@@ -24,6 +24,7 @@ def get_highest_result(result_dict:dict): # return the highest identified thing,
 def get_prediction(result_dict:dict): 
     prediction = result_dict.get('predictions')[0].get('prediction')
     score = result_dict.get('predictions')[0].get('prediction_score')
-    output = (prediction, score)
+    highest_output = prediction.partition(';')[2]
+    output = (highest_output, score)
     return output
 
