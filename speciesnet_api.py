@@ -19,7 +19,7 @@ accepted_filetypes = {".png", ".jpg", ".jpeg"}
 
 # processes an entire queue (folder) of images
 # input: filepath of folder (relative or exact)
-# output: vector of tuple(animal name, score)
+# output: list of <tuple(animal name, score)>
 def process_image_queue(images_path: str, safety: bool = True, debug:bool = False):
     if not os.path.exists(images_path):
         print(f"File not found: {images_path}")
