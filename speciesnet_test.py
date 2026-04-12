@@ -7,4 +7,4 @@ armadillo_image = "test_images/IMG_8872.jpg"
 #----------------------------------------------------------
 
 process_image_queue(images_path)
-process_single_image(armadillo_image)
+process_single_image("test_images/alligator.jpg")
