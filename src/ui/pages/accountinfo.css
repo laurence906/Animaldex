@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Chango&display=swap');
+:root{
+    --base-color: rgb(201, 221, 205);
+    --accent-color: rgb(61, 88, 63);
+    --text-color: rgb(36, 34, 34);
+    --input-color: rgb(225, 229, 233);
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-family: "Chango", "Averia Libre", sans-serif;
+    font-size: 12pt;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+    background: rgb(201, 221, 205);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.title {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 3rem;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    padding: 30px 40px;
+    border-radius: 12px;
+
+    background-color: var(--input-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.nav_buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.nav_buttons a {
+    padding: 8px 12px;
+    background: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: rgb(61, 88, 63);
+    color: white;
+}
+
+button:hover,
+.nav_buttons a:hover {
+    opacity: 0.8;
+}
