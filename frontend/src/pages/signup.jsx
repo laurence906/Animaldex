@@ -1,8 +1,8 @@
-import {useState} from "react";
-import {Link} from "react-router-dom"
-import ImagePanel from "../components/image_transition.jsx";
-import {UsernameIcon, EmailIcon, PasswordIcon} from "../components/form_icons.jsx";
-import styles from "./signup.module.css";
+import {useState} from "react"
+import {Link, useNavigate} from "react-router-dom"
+import ImagePanel from "../components/image_transition.jsx"
+import {UsernameIcon, EmailIcon, PasswordIcon} from "../components/form_icons.jsx"
+import styles from "./signup.module.css"
 
 // FORM VALIDATION JS LOGIC - WIP
 function getSignupErrors(username, email, password, verify_password){ //primarily check for empty fields
@@ -31,6 +31,7 @@ function getSignupErrors(username, email, password, verify_password){ //primaril
 
 //SIGNUP PAGE
 export default function Signup() {
+    const navigate = useNavigate();
     const [form_data, setFormData] = useState({
         username: "",
         email: "",
@@ -80,12 +81,16 @@ export default function Signup() {
             if (!response.ok){ //flask error
                 setErrorMessage(data.error || "Could not process signup. Please retry.");
             }
-            else {
+            if (response.status === 201){
                 console.log("Successful signup: ", data);
-                //WIP: navigate to next page
+                navigate("/login");
+            }
+            else{
+                setErrorMessage(data.error || "Signup could not be processed. Please retry.");
             }
         }
         catch (err) {
+            console.error(err);
             setErrorMessage("Could not connect. Please retry");
         }
         finally {

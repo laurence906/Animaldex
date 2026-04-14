@@ -1,7 +1,8 @@
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Signup from './pages/signup';
 import Login from './pages/login';
-import { useState, useEffect } from 'react'
+import Home from './pages/home';
+import { useState, useEffect } from 'react';
 
 function App() {
   const [animalString, setAnimalString] = useState("Figuring it out...")
@@ -20,7 +21,8 @@ function App() {
   
   return (
     <div className="App">
-      <h1>Please please please work!!</h1>
+
+       <h1>Please please please work!!</h1>
       <p>String from Backend: {animalString.toLocaleString()}</p>
 
       <form>
@@ -51,10 +53,13 @@ function App() {
           }}
         > Send to Flask </button> 
       </form>
-      <BrowserRouter>
+    
+    <BrowserRouter>
        <Routes>
          <Route path = "/signup" element = {<Signup />} />
          <Route path = "/login" element = {<Login />} />
+         <Route path = "/home" element = {<Home />} />
+         {/* Fallback route - go to signup for now, probably should have a 404 page later*/}
          <Route path = "*" element = {<Navigate to = "/signup" replace />} /> 
        </Routes>
    </BrowserRouter>

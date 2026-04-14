@@ -1,8 +1,8 @@
-import {useState} from "react";
-import {Link} from "react-router-dom"
-import ImagePanel from "../components/image_transition.jsx";
-import {UsernameIcon, PasswordIcon} from "../components/form_icons.jsx";
-import styles from "./login.module.css";
+import {useState} from "react"
+import {Link, useNavigate} from "react-router-dom"
+import ImagePanel from "../components/image_transition.jsx"
+import {UsernameIcon, PasswordIcon} from "../components/form_icons.jsx"
+import styles from "./login.module.css"
 
 // FORM VALIDATION JS LOGIC - WIP
 function getLoginErrors(username, password){ //primarily check for empty fields
@@ -23,6 +23,7 @@ function getLoginErrors(username, password){ //primarily check for empty fields
 
 //LOGIN PAGE
 export default function Login() {
+    const navigate = useNavigate();
     const [form_data, setFormData] = useState({
         username: "",
         password: "",
@@ -42,7 +43,7 @@ export default function Login() {
         }
     }
 
-    async function handleSubmit(e) { //submission made
+    async function handleSubmit(e) { //submission made, prevent default browser behavior
         e.preventDefault();
 
         const {username, password} = form_data;
@@ -72,7 +73,7 @@ export default function Login() {
             }
             else {
                 console.log("Successful login: ", data);
-                //WIP: navigate to next page
+                navigate("/home");
             }
         }
         catch (err) {
