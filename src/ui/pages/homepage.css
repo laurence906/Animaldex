@@ -25,19 +25,6 @@ html{
     background: rgb(201, 221, 205);
 }
 
-.container::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--accent-color);
-    clip-path: polygon(40% 0%, 41% 0%, 48% 100%, 47% 100%);
-
-    z-index: 1;
-}
-
 .title {
     margin-top: 60px;
     font-size: 3rem;
