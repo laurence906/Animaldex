@@ -6,8 +6,8 @@ import os
 import shutil
 import random
 
-crop_root = 'speciesnet_florida_project/cropped_images'
-splits_root = 'speciesnet_florida_project/splits'
+crop_root = 'training_data/cropped_images'
+splits_root = 'training_data/splits'
 
 for species in os.listdir(crop_root):
     images = os.listdir(os.path.join(crop_root, species))

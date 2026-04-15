@@ -4,9 +4,11 @@
 
 import os
 from PIL import Image
-from speciesnet import SpeciesNet
+from speciesnet.classifier import SpeciesNetClassifier
+from speciesnet.utils import load_rgb_image
 
-model = SpeciesNet()
+MODEL_PATH = 'speciesnet-v4.0.2a-weights'
+classifier = SpeciesNetClassifier(MODEL_PATH)
 
 raw_root_fp = 'training_data/raw_images'
 crop_root_fp = 'training_data/cropped_images'
@@ -18,17 +20,15 @@ for species in os.listdir(raw_root_fp):
 
     for filename in os.listdir(species_raw_path):
         image_path = os.path.join(species_raw_path, filename)
-        result = model.detect(image_path)
+        img = load_rgb_image(image_path)
+        if img is None:
+            print(f"Could not load: {filename}")
+            continue
 
-        if result['detections']:
-            img = Image.open(image_path)
-            width, height = img.size
-            bbox = result['detections'][0]['bbox']
-
-            left = bbox['x'] * width
-            top = bbox['y'] * height
-            right = left + bbox['width'] * width
-            bottom = top + bbox['height'] * height
-
-            crop = img.crop((left, top, right, bottom))
+        preprocessed = classifier.preprocess(img)
+        if preprocessed is not None:
+            crop = Image.fromarray(preprocessed.arr)
             crop.save(os.path.join(species_crop_path, filename))
+            print(f"Cropped: {filename}")
+        else:
+            print(f"No detection: {filename}")

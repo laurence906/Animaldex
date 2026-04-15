@@ -6,3 +6,5 @@ __pycache__
 backend
 frontend
 test_images
+speciesnet-v4.0.2a-weights
+training_data
