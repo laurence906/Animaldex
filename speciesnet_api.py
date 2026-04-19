@@ -58,6 +58,8 @@ def process_single_image(image_path: str, safety:bool = True, debug:bool = False
     elif not any(sub in image_path for sub in accepted_filetypes):
         print(f"File is of an unsupported filetype: {image_path}")
     else:
+        usedFallback = False # tracker
+
         result_dict = model.predict(
                 filepaths = [image_path],
                 run_mode = 'single_thread'
@@ -74,14 +76,13 @@ def process_single_image(image_path: str, safety:bool = True, debug:bool = False
 
         if ";;;;;blank" in result and result[1] > 90:
             pass
-        elif ";;;;;animal" in result:
+        elif ";;;;;animal" in result or result[1] < CONFIDENCE_RATIO:
             #print(f"IDENTIFIED: {";;;;;animal"} FROM: {image_path}")
+            usedFallback = True
             result_temp = fallback_model.predict(image_path)
             if (result_temp['confidence'] > 0.90):
                 result = (result_temp['species'],result_temp['confidence'])
-        elif result[1] < CONFIDENCE_RATIO:
-            result = (result_temp['species'],result_temp['confidence'])
 
-        print(f"IDENTIFIED: {result} FROM: {image_path}")
+        print(f"IDENTIFIED: {result} FROM: {image_path} ;;;; FALLBACK: {usedFallback}")
 
         return result
