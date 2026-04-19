@@ -58,7 +58,7 @@ export default function Home() {
 
             {/* PLACEHOLDER; have not yet implemented account nav */}
             <div className={styles.nav_buttons}>
-                <Link to = "/accountinfo">Account</Link> 
+                <Link to = "/account">Account</Link> 
             </div>
     
         </div>
