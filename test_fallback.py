@@ -1,8 +1,8 @@
-from floridaPrediction import FloridaSpeciesNet
+from floridaPrediction import floridaClassifier
 
 modelPath = 'kaggle:google/speciesnet/pyTorch/v4.0.2a/1' 
 
-model = FloridaSpeciesNet(
+fallback_model = floridaClassifier(
     model_path=modelPath,
     fallback_pkl='florida_fallback.pkl'
 )
@@ -10,5 +10,5 @@ model = FloridaSpeciesNet(
 
 print("Enter target file: ")
 cin = input()
-result = model.predict(cin)
+result = fallback_model.predict(cin)
 print(result)

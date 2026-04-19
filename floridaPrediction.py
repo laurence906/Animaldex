@@ -1,67 +1,61 @@
 import pickle
-import torch
 import numpy as np
 from speciesnet.classifier import SpeciesNetClassifier
 from speciesnet.utils import load_rgb_image
+from parser import *
 
-class FloridaSpeciesNet:
+CONFIDENCE_THRESHOLD = 0.7
 
-    CONFIDENCE_THRESHOLD = 0.7
+class floridaClassifier:
 
     def __init__(self, model_path, fallback_pkl):
+        # load SpeciesNet for feature exraction
         self.classifier = SpeciesNetClassifier(model_path)
-        self.features = {}
+        self.extracted_features = {}
+
+        # hook into the pooling layer to capture the 1280-dim embedding
         for name, module in self.classifier.model.named_modules():
             if 'avg_pool/Mean_Squeeze' in name:
-                module.register_forward_hook(self._hook_fn)
+                module.register_forward_hook(self._save_features)
                 break
-        with open(fallback_pkl, 'rb') as f:
-            saved = pickle.load(f)
-        self.fallback = saved['classifier']
-        self.encoder = saved['encoder']
 
-    def _hook_fn(self, module, input, output):
-        self.features['vector'] = output.cpu().detach().numpy()
+        with open(fallback_pkl, 'rb') as f:
+            saved_data = pickle.load(f)
+
+        self.fallback_classifier = saved_data['classifier']
+        self.label_encoder = saved_data['encoder']
+
+    def _save_features(self, module, input, output):
+        self.extracted_features['vector'] = output.cpu().detach().numpy()
 
     def predict(self, filepath, bboxes=None):
-        img = load_rgb_image(filepath)
-        if img is None:
+        # load and preprocess the image
+        image = load_rgb_image(filepath)
+        if image is None:
             return {'filepath': filepath, 'failure': 'could not load image'}
-        preprocessed = self.classifier.preprocess(img, bboxes=bboxes)
+
+        preprocessed = self.classifier.preprocess(image, bboxes=bboxes)
         if preprocessed is None:
             return {'filepath': filepath, 'failure': 'preprocessing failed'}
 
-        speciesnet_result = self.classifier.predict(filepath, preprocessed)
-        top_score = speciesnet_result['classifications']['scores'][0]
-        top_label = speciesnet_result['classifications']['classes'][0]
+        # run the forward pass just to trigger the feature hook
+        self.classifier.predict(filepath, preprocessed)
 
-        if top_score >= self.CONFIDENCE_THRESHOLD and not "blank" in top_label:
-            return {
-                'filepath': filepath,
-                'species': top_label,
-                'confidence': top_score,
-                'source': 'speciesnet'
-            }
+        # grab the captured feature vector
+        feature_vector = self.extracted_features.get('vector')
+        if feature_vector is None:
+            return {'filepath': filepath, 'failure': 'feature extraction failed'}
 
-        vector = self.features.get('vector')
-        if vector is None:
-            return {
-                'filepath': filepath,
-                'species': top_label,
-                'confidence': top_score,
-                'source': 'speciesnet_uncertain'
-            }
-
-        probabilities = self.fallback.predict_proba(vector)
-        top_idx = np.argmax(probabilities)
-        fallback_confidence = probabilities[0][top_idx]
-        fallback_species = self.encoder.inverse_transform([top_idx])[0]
+        # run the fallback classifier on the extracted features
+        probabilities = self.fallback_classifier.predict_proba(feature_vector)
+        best_index = np.argmax(probabilities)
+        confidence = probabilities[0][best_index]
+        species = self.label_encoder.inverse_transform([best_index])[0]
+        species = species.partition(';')[2]
 
         return {
             'filepath': filepath,
-            'species': fallback_species,
-            'confidence': fallback_confidence,
-            'speciesnet_suggestion': top_label,
-            'speciesnet_confidence': top_score,
+            'species': species,
+            'confidence': float(confidence),
             'source': 'fallback'
         }

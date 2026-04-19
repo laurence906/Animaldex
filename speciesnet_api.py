@@ -3,11 +3,19 @@
 from speciesnet import SpeciesNet
 import os
 from parser import *
+from floridaPrediction import floridaClassifier
 
 #constants
 model_name = 'kaggle:google/speciesnet/pyTorch/v4.0.2a/1' 
 model = SpeciesNet(model_name=model_name)
 accepted_filetypes = {".png", ".jpg", ".jpeg"}
+CONFIDENCE_RATIO = 0.75
+#----------------------------------------------------------
+#fallback
+fallback_model = floridaClassifier(
+    model_path = model_name,
+    fallback_pkl='florida_fallback.pkl'
+)
 #----------------------------------------------------------
 
 # ARGUMENTS KEY:
@@ -37,23 +45,7 @@ def process_image_queue(images_path: str, safety: bool = True, debug:bool = Fals
                 print(f"File is of an unsupported filetype: {full_path}")
                 continue
             
-            # running model
-            result_dict = model.predict(
-                filepaths = [full_path],
-                run_mode = 'single_thread' # use run_mode='single_thread' or it just wont work!
-            )
-
-            # output handling
-            if not debug:
-                if not safety: # safety is OFF, return whatever is actually identified
-                    curr = get_highest_result(result_dict)
-                if safety:
-                    curr = get_prediction(result_dict)
-                print(f"IDENTIFIED: {curr} FROM: {full_path}")
-                output.append(curr)
-            if debug:
-                print(f"RAW OUTPUT:\n{result_dict}")
-        if not debug: return output
+            process_single_image(image_path=full_path, safety=safety, debug=debug)
             
 
 
@@ -71,12 +63,25 @@ def process_single_image(image_path: str, safety:bool = True, debug:bool = False
                 run_mode = 'single_thread'
             )
         
-        if not debug:
-            if not safety: # safety is OFF, return whatever is actually identified
-                print(f"IDENTIFIED: {get_highest_result(result_dict)} FROM: {image_path}")
-                return get_highest_result(result_dict)
-            if safety:
-                print(f"IDENTIFIED: {get_prediction(result_dict)} FROM: {image_path}")
-                return get_prediction(result_dict)
         if debug:
             print(f"RAW OUTPUT:\n{result_dict}")
+            return
+        
+        if not debug and not safety:
+            result = get_highest_result(result_dict)
+        if not debug and safety:
+            result = get_prediction(result_dict)
+
+        if ";;;;;blank" in result and result[1] > 90:
+            pass
+        elif ";;;;;animal" in result:
+            #print(f"IDENTIFIED: {";;;;;animal"} FROM: {image_path}")
+            result_temp = fallback_model.predict(image_path)
+            if (result_temp['confidence'] > 0.90):
+                result = (result_temp['species'],result_temp['confidence'])
+        elif result[1] < CONFIDENCE_RATIO:
+            result = (result_temp['species'],result_temp['confidence'])
+
+        print(f"IDENTIFIED: {result} FROM: {image_path}")
+
+        return result
