@@ -6,3 +6,4 @@ AnimalDex utilizes [**Google's SpeciesNet**](https://github.com/google/cameratra
 
 ## Setup & Other Info
 This branch holds the backend ML Model logic. This varies from test images used for verification, to dictionary parsing and SpeciesNet API calls. If interested, you would only want to run the tests.py or speciesnet_test.py files; they are the only ones with actual behavior. speciesnet_api.py contains the prototype of the backend API used throughout the project. If you run into any issues running the code here, first make sure you have updated your environment according to requirements.txt, and then make sure the code you are running is calling a valid filepath.
+To include this in your project, ensure you adhere to **requirements.txt** and then add **speciesnet_api.py**, **floridaPrediction.py**, **parser.py**, and **florida_fallback.pkl** to your project.

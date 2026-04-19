@@ -17,7 +17,6 @@ fallback_model = floridaClassifier(
     fallback_pkl='florida_fallback.pkl'
 )
 #----------------------------------------------------------
-
 # ARGUMENTS KEY:
 # image(s)_path <- self explanitory, either a folder of images or a path to a single image
 # safety (default = True) <- When True, ensures that an animal is either fully identified or not identified at all.
