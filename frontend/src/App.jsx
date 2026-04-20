@@ -1,6 +1,7 @@
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Signup from './pages/signup';
 import Login from './pages/login';
+import LoginAdmin from './pages/login_admin';
 import Home from './pages/home';
 import AccountInfo from './pages/accountinfo';
 import { useState, useEffect } from 'react';
@@ -59,6 +60,7 @@ function App() {
        <Routes>
          <Route path = "/signup" element = {<Signup />} />
          <Route path = "/login" element = {<Login />} />
+         <Route path = '/adminlogin' element = {<LoginAdmin />} />
          <Route path = "/home" element = {<Home />} />
          <Route path = '/account' element = {<AccountInfo />} />
          {/* Fallback route - go to signup for now, probably should have a 404 page later*/}

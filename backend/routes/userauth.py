@@ -25,7 +25,7 @@ def signup():
     
     #Hash encrypt password and store user
     hashed_pass = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-    users.insert_one({"username": username, "email": email, "password": hashed_pass, "dex_entries": 0})
+    users.insert_one({"username": username, "email": email, "password": hashed_pass, "dex_entries": 0, "isadmin": False})
 
     return jsonify({"message": "Signup successful :)"}), 201
 
@@ -50,6 +50,33 @@ def login():
     #Successful login, access token provided
     token = create_access_token(identity = username)
     return jsonify({"message": "Login successful :)", "token": token}), 200
+
+
+@auth.route("/api/adminlogin", methods = ["POST"])
+def adminlogin():
+    login_request = request.get_json()
+    username = login_request.get("username")
+    password = login_request.get("password")
+
+    #Error handling for login
+    if not username or not password:
+        return jsonify({"error": "Missing required fields for login"}), 400
+    
+    #Find username in DB and check for password match
+    user = users.find_one ({"username": username}) 
+
+    if not user or not bcrypt.checkpw(password.encode("utf-8"), user["password"]):
+        return jsonify({"error": "Invalid username or password."}), 401
+    
+    if not user["isadmin"]:
+        return jsonify({"error": "You do not have admin permissions"}), 403
+    
+    #Successful login, access token provided
+    token = create_access_token(identity = username, additional_claims = {"adminpermissions": True})
+    return jsonify({"message": "Login successful :)", 
+                    "token": token,
+                    "adminpermissions": True}), 200
+
 
 ### ACCOUNT INFO
 @auth.route("/api/account", methods = ["GET"])

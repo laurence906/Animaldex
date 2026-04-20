@@ -2,7 +2,7 @@ import {useState} from "react"
 import {Link, useNavigate} from "react-router-dom"
 import ImagePanel from "../components/image_transition.jsx"
 import {UsernameIcon, PasswordIcon} from "../components/form_icons.jsx"
-import styles from "./login.module.css"
+import styles from "./login_admin.module.css"
 
 // FORM VALIDATION JS LOGIC - WIP
 function getLoginErrors(username, password){ //primarily check for empty fields
@@ -22,7 +22,7 @@ function getLoginErrors(username, password){ //primarily check for empty fields
 }
 
 //LOGIN PAGE
-export default function Login() {
+export default function LoginAdmin() {
     const navigate = useNavigate();
     const [form_data, setFormData] = useState({
         username: "",
@@ -61,7 +61,7 @@ export default function Login() {
         setErrorMessage(""); //should only happen assuming errors are clear
 
         try {
-            const response = await fetch("http://localhost:5000/api/login", {
+            const response = await fetch("http://localhost:5000/api/adminlogin", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({username, password}),
@@ -72,8 +72,9 @@ export default function Login() {
                 setErrorMessage(data.error || "Could not process login. Please retry.");
             }
             else {
-                console.log("Successful login: ", data);
+                console.log("Successful admin login: ", data);
                 localStorage.setItem("token", data.token); //store JWT when user logs in
+                localStorage.setItem("adminpermissions", true); //SESSION BASED ADMIN TOKEN: USE FOR CONDITIONAL RENDERING
                 navigate("/home");
             }
         }
@@ -91,7 +92,7 @@ export default function Login() {
             <ImagePanel style_class = {styles.image_panel} />
 
             <div className = {styles.form_panel}>
-                <h1>Log In</h1>
+                <h1>Admin Log In</h1>
                 {error_message && (
                     <p className = {styles.error_message}>{error_message}</p>
                 )}
@@ -133,7 +134,7 @@ export default function Login() {
                     Not a member? <Link to = "/signup">Sign up here.</Link>
                 </p>
                 <p>
-                    Logging in as admin? <Link to = "/adminlogin"> Login here.</Link>
+                    Logging in as user? <Link to = "/login"> Login here.</Link>
                 </p>
 
                 </form>

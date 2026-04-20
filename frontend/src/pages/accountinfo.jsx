@@ -46,6 +46,7 @@ export default function AccountInfo() {
 
     function logout(){
         localStorage.removeItem("token");
+        localStorage.removeItem("adminpermissions"); //ensure admin status is removed on logout
         navigate("/login");
     }
     
