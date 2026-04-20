@@ -32,22 +32,9 @@ def useModelInWebpageTest():
         print("Hacking mainframe.")
         print("Running machine learning model.")
         print("Examining DNA cells.")
-        
-        # use run_mode='single_thread' to avoid multiprocessing (bad!!!!!)
-        # python -c "from speciesnet import SpeciesNet; help(SpeciesNet.predict)" ||||| dumps function signature for all inputs
-        # resultdict = model.predict(
-        #     filepaths=[image_path], 
-        #     run_mode='single_thread'
-        # )
 
         resultTuple = process_single_image(image_path, safety=True, debug=False) # returns list of 1 tuple
-        # print(type(resultTuple)) # type <class 'tuple'>
 
-        # print(resultdict) # RAW OUTPUT
-
-        # FORMAT: Predictions is an array of predictions (multi image input), each index has an inner dict.
-        #print(resultdict.get('predictions')[0].get('classifications').get('classes')) # gets entire list
-        # firstInResultDict = resultdict.get('predictions')[0].get('classifications').get('classes')[0]
         firstInResultTuple = resultTuple[0]
         return {'modelResult': firstInResultTuple} # must be formatted as dict entry for React to pick up
         
@@ -59,6 +46,37 @@ def recieveFromFrontendExample():
 
     return jsonify({"status": "success", "received": recievedData}), 200
 
+@app.route('/api/upload', methods=['POST'])
+def processUpload():
+    # Put the file object in temporary folder imgProcessingTemp
+    # Validate and grab the file from the request
+    if 'image' not in request.files:
+        return jsonify({"status": "error", "message": "No file part in the request"}), 400
+    file = request.files['image']
+    if file.filename == '':
+        return jsonify({"status": "error", "message": "No file selected for uploading"}), 400
+    filename = file.filename
+    tempPath = os.path.join('imgProcessingTemp', filename)
+    file.save(tempPath)
+
+
+    # Plug it into the model
+    if not os.path.exists(tempPath):
+        print(f"File not found: {tempPath}") # Should never run; a file was just created at this temp_path
+        return jsonify({"status": "error", "message": "Something went wrong internally."}), 400
+    else:
+        # print("Hacking mainframe.")
+        # print("Running machine learning model.")
+        # print("Examining DNA cells.")
+
+        resultTuple = process_single_image(tempPath, safety=True, debug=False) # returns list of 1 tuple
+
+        firstInResultTuple = resultTuple[0]
+    
+    # Clean up the temporary file
+    os.remove(tempPath)
+
+    return jsonify({"status": "success", "modelResult": resultTuple}), 200 # must be formatted as dict entry for React to pick up
 
 
 if __name__ == "__main__":

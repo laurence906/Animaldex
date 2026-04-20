@@ -16,7 +16,7 @@ export default function Home() {
         form_data.append("image", file);
         
         try{
-            const response = await fetch("http//localhost:5000/api/upload", { //PLACEHOLDER: Eventually, integrate Jaden's API code from fronttobackend here.
+            const response = await fetch("http://localhost:5000/api/upload", {
                 method: "POST",
                 body: form_data,
             });
@@ -28,6 +28,8 @@ export default function Home() {
             else{
                 console.log("Image uploaded successfully:", data);
                 // WIP: Handling image upload. Basically outputting classification, updating a user's dex, etc.
+                // Increment this user's dex count
+                
             }
         }
         catch (err){
