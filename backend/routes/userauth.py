@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import bcrypt
 from db import users
 
@@ -24,7 +25,7 @@ def signup():
     
     #Hash encrypt password and store user
     hashed_pass = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-    users.insert_one({"username": username, "email": email, "password": hashed_pass})
+    users.insert_one({"username": username, "email": email, "password": hashed_pass, "dex_entries": 0})
 
     return jsonify({"message": "Signup successful :)"}), 201
 
@@ -46,4 +47,25 @@ def login():
     if not user or not bcrypt.checkpw(password.encode("utf-8"), user["password"]):
         return jsonify({"error": "Invalid username or password."}), 401
     
-    return jsonify({"message": "Login successful :)"}), 200
+    #Successful login, access token provided
+    token = create_access_token(identity = username)
+    return jsonify({"message": "Login successful :)", "token": token}), 200
+
+### ACCOUNT INFO
+@auth.route("/api/account", methods = ["GET"])
+@jwt_required()
+def account():
+    try:
+        username = get_jwt_identity()
+        user = users.find_one({"username": username})
+
+        if not user:
+            return jsonify({"error": "User info could not be found."}), 404
+        
+        return jsonify({
+            "username": user["username"],
+            "email": user["email"],
+            "dex_entries": user.get("dex_entries", 0)
+        }), 200
+    except Exception as e:
+        return jsonify({"error": f"Error processing JWT and getting user data: {str(e)}"}), 422

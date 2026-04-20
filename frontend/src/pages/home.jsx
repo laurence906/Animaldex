@@ -52,13 +52,12 @@ export default function Home() {
                     placeholder="Upload"
                     accept="image/*"
                     />
-                    <button type="submit">
+                    <button className = {styles.submission_button} type="submit">
                         Submit Image
                     </button>
                 </form>
             </div>
 
-            {/* PLACEHOLDER; have not yet implemented account nav */}
             <div className={styles.nav_buttons}>
                 <Link to = "/account">Account</Link> 
             </div>
