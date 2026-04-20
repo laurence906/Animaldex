@@ -39,6 +39,7 @@ itsdangerous==2.2.0
 jedi==0.19.2
 Jinja2==3.1.6
 jmespath==1.1.0
+joblib==1.5.3
 kagglehub==1.0.0
 kagglesdk==0.1.16
 kiwisolver==1.5.0
@@ -84,6 +85,7 @@ roboflow==1.2.16
 s3transfer==0.16.0
 sahi==0.11.36
 scipy==1.17.1
+scikit-learn==1.8.0
 seaborn==0.13.2
 setuptools==80.10.2
 shapely==2.1.2
@@ -98,6 +100,7 @@ tensorboard-data-server==0.7.2
 termcolor==3.3.0
 terminaltables==3.1.10
 thop==0.1.1.post2209072238
+threadpoolctl==3.6.0
 torch==2.10.0
 torchvision==0.25.0
 tqdm==4.67.3
