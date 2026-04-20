@@ -43,6 +43,10 @@ html{
     right: 20px;
 }
 
+.submission_button {
+    font-family: "Chango", "Averia Libre", sans-serif;
+}
+
 .nav_buttons a {
     padding: 8px 12px;
     background: var(--accent-color);
@@ -56,7 +60,7 @@ button {
     border-radius: 8px;
     border: none;
     background: rgb(61, 88, 63);
-    color: white;
+    color: white;   
 }
 
 button:hover,
