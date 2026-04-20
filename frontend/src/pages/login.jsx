@@ -61,7 +61,7 @@ export default function Login() {
         setErrorMessage(""); //should only happen assuming errors are clear
 
         try {
-            const response = await fetch("http://localhost:5000/api/login", { //WIP: PLACEHOLDER LINK
+            const response = await fetch("http://localhost:5000/api/login", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({username, password}),
@@ -73,6 +73,7 @@ export default function Login() {
             }
             else {
                 console.log("Successful login: ", data);
+                localStorage.setItem("token", data.token); //store JWT when user logs in
                 navigate("/home");
             }
         }

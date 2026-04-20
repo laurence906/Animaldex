@@ -19,6 +19,10 @@ html{
     text-align: center;
 }
 
+p{
+    margin-bottom: 5px;
+}
+
 .container {
     position: relative;
     height: 100vh;
@@ -38,7 +42,7 @@ html{
     font-size: 3rem;
 }
 
-.info-container {
+.info_container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,28 +56,31 @@ html{
 }
 
 .nav_buttons {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    position: relative;
+    justify-content: center;
+    margin-top: 20px;
+
+    display: flex;
+    gap: 10px;
 }
 
-.nav_buttons a {
-    padding: 8px 12px;
+.nav_buttons button {
     background: var(--accent-color);
     color: white;
-    text-decoration: none;
-    border-radius: 6px
+    border-radius: 6px;
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
 }
 
-button {
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    background: rgb(61, 88, 63);
-    color: white;
+.nav_buttons button:hover {
+    background: white;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
 }
 
-button:hover,
-.nav_buttons a:hover {
-    opacity: 0.8;
+.error_message{
+    color: rgb(209, 43, 14);
+    font-family: "Atkinson Hyperlegible Mono", monospace;
+    font-weight: bold;
+    white-space: pre-line;
 }
