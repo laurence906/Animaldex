@@ -4,7 +4,7 @@
     <head>
         <Title>Animaldex</Title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="homepage.css">
     </head>
 
@@ -16,17 +16,32 @@
                 Animaldex - Submit an Image!
             </h1>
 
-            <div class="upload_container">
-                
-                <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class= "format">
 
-                    <input type="file" name="image" id="image_input" placeholder="Upload" accept="image/*">
+                <div class= "Visual">
 
-                    <button type="submit">
-                        Submit Image
-                    </button>
+                    <div class= "dex">
 
-                </form>
+                            <div class="dex-hinge"></div>
+                            <div class="dex-body"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="upload_container">
+                    
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+
+                        <input type="file" name="image" id="image_input" placeholder="Upload" accept="image/*">
+
+                        <button type="submit">
+                            Submit Image
+                        </button>
+
+                    </form>
+
+                </div>
 
             </div>
 
