@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 jwt = JWTManager(app)
 
-CORS(app, origins = ["http://localhost:5173"])
+CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
 
 app.register_blueprint(auth)
 
