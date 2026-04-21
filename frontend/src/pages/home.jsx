@@ -3,6 +3,7 @@ import styles from "./home.module.css";
 
 export default function Home() {
     const navigate = useNavigate();
+    const token = localStorage.getItem("token");
 
     async function handleSubmit(e){ //prevent default browser behavior
         e.preventDefault();
@@ -31,14 +32,63 @@ export default function Home() {
                 console.log("Image uploaded successfully:", data);
                 // WIP: Handling image upload. Basically outputting classification, updating a user's dex, etc.
                 // Increment this user's dex count
-                
-            }
-        }
-        catch (err){
+                try{
+                    const token = localStorage.getItem("token");
+                    if (!token){
+                        console.error("Could not get JWT token");
+                        return;
+                    }
+                    const response = await fetch("http://localhost:5000/api/incrementDexEntries", {
+                        method: "POST",
+                        body: 1,
+                        headers: {
+                                    "Authorization": `Bearer ${token}`
+                                 }
+                    });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        console.error("Error updating count");
+                    }
+                    else{
+                        console.log("User's dex count updated");
+                        }
+                } catch (err){
+                    console.error("Increment failed:", err);
+                }
+            }   
+        } catch (err){
             console.error("Could not upload image:", err);
         }
 
     }
+
+    // async function handleIncrementTest(){
+    //     // Handle test button click
+    //     try{
+    //         const token = localStorage.getItem("token");
+    //         if (!token){
+    //             console.error("Could not get JWT token");
+    //             return;
+    //         }
+    //         const response = await fetch("http://localhost:5000/api/incrementDexEntries", {
+    //             method: "POST",
+    //             body: 1,
+    //             headers: {
+    //                         "Authorization": `Bearer ${token}`
+    //                      }
+    //         });
+    //         const data = await response.json();
+    //         if (!response.ok) {
+    //             console.error("Error updating count");
+    //         }
+    //         else{
+    //             console.log("User's dex count updated");
+    //             }
+    //     }
+    //     catch (err){
+    //         console.error("Test failed:", err);
+    //     }
+    // }
 
     return (
         <div className={styles.container}>

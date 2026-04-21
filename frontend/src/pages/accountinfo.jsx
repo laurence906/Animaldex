@@ -7,7 +7,8 @@ export default function AccountInfo() {
     const [user_data, setUserData] = useState({
         username: "",
         email: "",
-        dex_entries: 0
+        dex_entries: 0,
+        isadmin: false
     });
 
     const [error_message, setErrorMessage] = useState("");
@@ -61,6 +62,7 @@ export default function AccountInfo() {
                 <p> Username: {user_data.username} </p>
                 <p> Email: {user_data.email} </p>
                 <p> Total Dex Entries: {user_data.dex_entries} </p>
+                <p> Admin Status: {user_data.isadmin ? "Yes" : "No"} </p>
             </div>
 
             <div className = {styles.nav_buttons}>

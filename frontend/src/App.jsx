@@ -10,13 +10,13 @@ function App() {
   const [animalString, setAnimalString] = useState("Figuring it out...")
   const [content, setContent] = useState("")
 
-  useEffect(() => {
-    fetch('/api/backToFrontTest')
-      .then(res => res.json())
-      .then(data => {
-        setAnimalString(data.modelResult);
-      });
-  }, []); // the second argument, the empty list, is important to prevent recursive looping
+  // useEffect(() => {
+  //   fetch('/api/backToFrontTest')
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setAnimalString(data.modelResult);
+  //     });
+  // }, []); // the second argument, the empty list, is important to prevent recursive looping
 
   
 
@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
 
-       <h1>Please please please work!!</h1>
+       {/* <h1>Please please please work!!</h1>
       <p>String from Backend: {animalString.toLocaleString()}</p>
 
       <form>
@@ -54,7 +54,7 @@ function App() {
             }
           }}
         > Send to Flask </button> 
-      </form>
+      </form> */}
     
     <BrowserRouter>
        <Routes>

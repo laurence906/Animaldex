@@ -1,11 +1,13 @@
 from speciesnet import SpeciesNet
 from flask import Flask, request, jsonify     # adds flask commands
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from routes.userauth import auth
 from dotenv import load_dotenv
 from speciesnet_api import *
 import os
+from db import users
+
 
 load_dotenv()
 app = Flask(__name__)
@@ -79,6 +81,34 @@ def processUpload():
     os.remove(tempPath)
 
     return jsonify({"status": "success", "modelResult": resultTuple}), 200 # must be formatted as dict entry for React to pick up
+
+
+@app.route('/api/updateDexEntries', methods=['POST'])
+def updateDexCount():
+    # This route will handle updating the user's dex count
+    recievedData = request.get_json()
+    
+    
+    # mongodb.user.dexentries += data
+
+
+    return jsonify({"status": "success", "message": "Dex count updated."}), 200
+    
+    
+@app.route('/api/incrementDexEntries',  methods=['POST'])
+@jwt_required()
+def incrementDex():
+
+    username = get_jwt_identity()
+    user = users.find_one({"username": username})
+
+    if not user:
+        return jsonify({"status": "error", "message": "User to update not found."}), 400
+    else:
+        users.update_one({"username": username}, {"$inc": {"dex_entries": 1}})
+        return jsonify({"status": "success", "message": "Dex entry count incremented."}), 200
+    
+    
 
 
 if __name__ == "__main__":

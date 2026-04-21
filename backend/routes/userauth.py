@@ -21,7 +21,7 @@ def signup():
         return jsonify({"error": "Username was taken."}), 409
     
     if users.find_one({"email": email}):
-        return jsonify({"error": "Email is already registered to an account."}), 409
+        return jsonify({"error": "Email is already registered to an account."}), 409 
     
     #Hash encrypt password and store user
     hashed_pass = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
@@ -92,7 +92,8 @@ def account():
         return jsonify({
             "username": user["username"],
             "email": user["email"],
-            "dex_entries": user.get("dex_entries", 0)
+            "dex_entries": user.get("dex_entries"),
+            "isadmin": user.get("isadmin")
         }), 200
     except Exception as e:
         return jsonify({"error": f"Error processing JWT and getting user data: {str(e)}"}), 422
