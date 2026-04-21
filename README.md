@@ -6,7 +6,7 @@ AnimalDex utilizes [**Google's SpeciesNet**](https://github.com/google/cameratra
 
 ## Setup & Other Info
 - Make sure to have node and Mongo Compass installed. 
-- Start a virtual environment in the backend folder and install from requirements.txt
+- Start a virtual environment using Python 3.12 in the backend folder and install from requirements.txt
 - Set up a .env file in backend folder, and paste a format similar to this:\
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''\
 MONGO_URI=mongodb://localhost:27017\
