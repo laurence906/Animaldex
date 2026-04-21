@@ -9,6 +9,7 @@ export default function Home() {
 
         const file = e.target.image.files[0]; //array of files uploaded, take first
         if (!file){ //no file uploaded
+            alert("No image uploaded");
             return
         }
 
@@ -26,6 +27,7 @@ export default function Home() {
                 console.error("Error uploading image:", data);
             }
             else{
+                navigate("/dex" , {state: {imageUrl: data.imageUrl, animal: data.animal}});
                 console.log("Image uploaded successfully:", data);
                 // WIP: Handling image upload. Basically outputting classification, updating a user's dex, etc.
                 // Increment this user's dex count
@@ -43,20 +45,33 @@ export default function Home() {
             <h1 className={styles.title}>
                 Animaldex - Submit an Image!
             </h1>
-            <div className={styles.upload_container}>
-                <form onSubmit = {handleSubmit}>
-                    <input
-                    type="file"
-                    name="image"
-                    id="image_input"
-                    placeholder="Upload"
-                    accept="image/*"
-                    />
-                    <button className = {styles.submission_button} type="submit">
-                        Submit Image
-                    </button>
-                </form>
-            </div>
+
+            <div className={styles.format}>
+
+                <div className={styles.visual}>
+
+                        <div className={styles.dex}>
+                            <div className={styles.dex_hinge}></div>
+                            <div className={styles.dex_body}></div>
+                        </div>
+                </div>
+
+                <div className={styles.upload_container}>
+                    <form onSubmit = {handleSubmit}>
+                        <input
+                        type="file"
+                        name="image"
+                        id="image_input"
+                        placeholder="Upload"
+                        accept="image/*"
+                        />
+                        <button className = {styles.submission_button} type="submit">
+                            Submit Image
+                        </button>
+                    </form>
+                </div>
+
+            </div>    
 
             <div className={styles.nav_buttons}>
                 <Link to = "/account">Account</Link> 
