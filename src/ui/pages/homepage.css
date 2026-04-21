@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Chango&display=swap');
+:root{
+    --base-color: rgb(201, 221, 205);
+    --accent-color: rgb(61, 88, 63);
+    --text-color: rgb(36, 34, 34);
+    --input-color: rgb(225, 229, 233);
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-family: "Chango", "Averia Libre", sans-serif;
+    font-size: 12pt;
+    color: var(--text-color);
+    text-align: center;
+}

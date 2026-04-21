@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Chango&display=swap');
+:root{
+    --base-color: rgb(201, 221, 205);
+    --accent-color: rgb(61, 88, 63);
+    --text-color: rgb(36, 34, 34);
+    --input-color: rgb(225, 229, 233);
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-family: "Chango", "Averia Libre", sans-serif;
+    font-size: 12pt;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+    background: var(--base-color);
+
+    font-family: "Chango", sans-serif;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.title {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+}
+
+.format {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dex {
+    width: 260px;
+    height: 360px;
+
+    display: flex;
+    flex-direction: row;
+
+    border-radius: 16px;
+    border: 2px solid rgba(0,0,0,0.1);
+
+    background: var(--accent-color);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+
+    overflow: hidden;
+}
+
+.dex_hinge {
+    width: 14px;
+
+    background: linear-gradient(
+        to right,
+        #222,
+        #444,
+        #222
+    );
+}
+
+.dex_body {
+    flex: 1;
+    position: relative;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.05),
+        rgba(0,0,0,0.1)
+    );
+}
+
+.dex_body::after {
+    content: "";
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 12px;
+
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.dex_body::before {
+    content: "";
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(circle at 30% 30%, #444, #000);
+
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.3),
+        0 0 4px rgba(0,0,0,0.5);
+}
+
+.upload_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload_container input {
+    font-family: inherit;
+}
+
+.nav_buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.submission_button {
+    font-family: "Chango", "Averia Libre", sans-serif;
+}
+
+.nav_buttons a {
+    padding: 8px 12px;
+    background: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent-color);
+    color: white;   
+
+    font-family: inherit;
+    cursor: pointer;
+}
+
+button:hover,
+.nav_buttons a:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
