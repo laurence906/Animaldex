@@ -23,13 +23,12 @@ export default function Home() {
                 body: form_data,
             });
 
-            const data = await response.json();
+            const modelData = await response.json();
             if (!response.ok){
-                console.error("Error uploading image:", data);
+                console.error("Error uploading image:", modelData);
             }
             else{
-                navigate("/dex" , {state: {imageUrl: data.imageUrl, animal: data.animal}});
-                console.log("Image uploaded successfully:", data);
+                console.log("Image uploaded successfully:", modelData);
                 // WIP: Handling image upload. Basically outputting classification, updating a user's dex, etc.
                 // Increment this user's dex count
                 try{
@@ -45,13 +44,15 @@ export default function Home() {
                                     "Authorization": `Bearer ${token}`
                                  }
                     });
-                    const data = await response.json();
+                    const incrementData = await response.json();
                     if (!response.ok) {
                         console.error("Error updating count");
                     }
                     else{
                         console.log("User's dex count updated");
-                        }
+                    }
+
+                    navigate("/dex" , {state: {modelResult: modelData.modelResult}});
                 } catch (err){
                     console.error("Increment failed:", err);
                 }

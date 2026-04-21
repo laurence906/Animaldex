@@ -3,6 +3,7 @@ import Signup from './pages/signup';
 import Login from './pages/login';
 import LoginAdmin from './pages/login_admin';
 import Home from './pages/home';
+import Dex from './pages/dex'
 import AccountInfo from './pages/accountinfo';
 import { useState, useEffect } from 'react';
 
@@ -63,6 +64,7 @@ function App() {
          <Route path = '/adminlogin' element = {<LoginAdmin />} />
          <Route path = "/home" element = {<Home />} />
          <Route path = '/account' element = {<AccountInfo />} />
+          <Route path = "/dex" element = {<Dex />} />
          {/* Fallback route - go to signup for now, probably should have a 404 page later*/}
          <Route path = "*" element = {<Navigate to = "/signup" replace />} /> 
        </Routes>
