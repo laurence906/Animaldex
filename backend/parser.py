@@ -2,6 +2,8 @@
 
 # FORMAT: Predictions is an ARRAY of predictions, each index has an inner dict.
 
+##hello
+
 
 def get_classes(result_dict: dict): # returns ALL identified animals, helper function not useful elsewhere
     classes = result_dict.get('predictions')[0].get('classifications').get('classes')

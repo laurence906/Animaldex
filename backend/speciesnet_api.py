@@ -1,5 +1,6 @@
 ### This file contains the api to efficiently call the model. It is a simplified version of directly accessing the base API.
 ### see requirements.txt if encountering any errors/issues
+##hello
 from speciesnet import SpeciesNet
 import os
 from parser import *
@@ -14,7 +15,7 @@ CONFIDENCE_RATIO = 0.75
 #fallback
 fallback_model = floridaClassifier(
     model_path = model_name,
-    fallback_pkl='florida_fallback.pkl'
+    fallback_pkl='florida_fallbackmodel.pkl'
 )
 #----------------------------------------------------------
 # ARGUMENTS KEY:
