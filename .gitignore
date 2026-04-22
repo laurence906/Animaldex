@@ -3,6 +3,6 @@
 node_modules
 __pycache__
 .env
-backend
+
 frontend
 test_images
